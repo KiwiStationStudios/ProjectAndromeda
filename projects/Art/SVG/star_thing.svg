@@ -9,7 +9,7 @@
    viewBox="0 0 512.003 512.003"
    xml:space="preserve"
    sodipodi:docname="star_thing.svg"
-   inkscape:export-filename="..\Desktop\openneonix\assets\images\menus\star_rate_half.png"
+   inkscape:export-filename="..\..\..\..\star_rate_hole.png"
    inkscape:export-xdpi="122.88"
    inkscape:export-ydpi="122.88"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
@@ -67,12 +67,12 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#505050"
    inkscape:zoom="0.99375"
-   inkscape:cx="254.08805"
-   inkscape:cy="414.08805"
+   inkscape:cx="253.58491"
+   inkscape:cy="413.08176"
    inkscape:window-width="1920"
-   inkscape:window-height="991"
-   inkscape:window-x="1791"
-   inkscape:window-y="-9"
+   inkscape:window-height="1009"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
    inkscape:window-maximized="1"
    inkscape:current-layer="g18" />
 
@@ -91,14 +91,14 @@
        inkscape:label="star_itself" /><path
        id="path16"
        clip-path="none"
-       style="display:inline;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:15.3601;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter24)"
+       style="display:none;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:15.3601;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter24)"
        inkscape:label="star_itself_half"
        d="m 259.32277,129.78326 c -11.45803,0.9622 -21.52852,7.67995 -26.68766,18.13636 l -22.74013,46.07277 -50.84655,7.38504 c -12.48147,1.81749 -22.65069,10.39202 -26.53765,22.37638 -3.8986,11.9891 -0.71323,24.90821 8.3138,33.71395 l 36.78896,35.86271 -8.6838,50.6353 c -2.13407,12.42269 2.87667,24.74559 13.08008,32.16268 5.65625,4.11197 12.34189,6.28629 19.33386,6.28629 5.30896,0 10.60191,-1.30784 15.30259,-3.78127 l 42.6765,-22.43638 z" /><path
        id="path17"
        style="display:inline;mix-blend-mode:normal;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:15.3601;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:15.3601, 30.7202;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter25)"
        d="m 262.12448,129.58876 c -12.61119,0 -23.91149,7.02426 -29.48991,18.33045 l -22.73918,46.07328 -50.84665,7.38538 c -12.48148,1.81749 -22.65145,10.39216 -26.53842,22.37653 -3.8986,11.98911 -0.71252,24.90759 8.31451,33.71334 l 36.78862,35.86213 -8.68312,50.63554 c -2.13407,12.42271 2.87652,24.74638 13.07994,32.16348 5.65626,4.11197 12.34105,6.28552 19.33303,6.28552 5.30897,0 10.60282,-1.30795 15.3035,-3.78138 l 45.47834,-23.90983 45.46974,23.9105 c 4.70068,2.46972 9.99108,3.77608 15.29688,3.77608 6.99675,0 13.68484,-2.17157 19.33369,-6.27825 10.20659,-7.41232 15.21957,-19.73772 13.08391,-32.16149 l -8.68378,-50.64084 36.7853,-35.86014 c 9.03128,-8.79568 12.21789,-21.71668 8.31716,-33.71004 -3.88909,-11.98912 -14.05786,-20.56366 -26.54304,-22.38115 l -50.84467,-7.38538 -22.73586,-46.07328 c -5.58004,-11.30619 -16.87675,-18.33045 -29.47999,-18.33045 z"
        inkscape:label="star_itself_half_hole" /><path
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:18.9339;stroke-linecap:round;stroke-miterlimit:0.5;stroke-dasharray:none;stroke-dashoffset:6.77484;stroke-opacity:1;paint-order:fill markers stroke;filter:url(#filter23)"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:18.9339;stroke-linecap:round;stroke-miterlimit:0.5;stroke-dasharray:none;stroke-dashoffset:6.77484;stroke-opacity:1;paint-order:fill markers stroke;filter:url(#filter23)"
        id="path18"
        sodipodi:type="arc"
        sodipodi:cx="262.11975"
@@ -119,7 +119,7 @@
        inkscape:label="star_itself" /><path
        id="path20"
        clip-path="none"
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:15.3601;stroke-dasharray:none;stroke-opacity:1"
+       style="display:none;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:15.3601;stroke-dasharray:none;stroke-opacity:1"
        inkscape:label="star_itself_half"
        d="m 259.32277,129.78326 c -11.45803,0.9622 -21.52852,7.67995 -26.68766,18.13636 l -22.74013,46.07277 -50.84655,7.38504 c -12.48147,1.81749 -22.65069,10.39202 -26.53765,22.37638 -3.8986,11.9891 -0.71323,24.90821 8.3138,33.71395 l 36.78896,35.86271 -8.6838,50.6353 c -2.13407,12.42269 2.87667,24.74559 13.08008,32.16268 5.65625,4.11197 12.34189,6.28629 19.33386,6.28629 5.30896,0 10.60191,-1.30784 15.30259,-3.78127 l 42.6765,-22.43638 z" /><path
        id="path21"

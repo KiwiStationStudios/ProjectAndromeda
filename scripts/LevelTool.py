@@ -14,9 +14,9 @@ def makeString(length) -> str:
 def main(args) -> None:
     if len(args) > 0:
         # hack :)
-        identity = "com.kiwiworksinc.andromeda"
+        identity = "com.kiwiworksinc.projectnx"
         appdata = os.getenv("appdata")
-        path = appdata + "/LOVE/" + identity + "/editor/edited/"
+        path = appdata + "/LOVE/" + identity + "/user/editor/"
 
         templateJson = {
             "meta" : {
@@ -71,5 +71,4 @@ def main(args) -> None:
         print("Please specify a valid mode -> [create, clear]")
 
 if __name__ == "__main__":
-
     main(sys.argv[1:])

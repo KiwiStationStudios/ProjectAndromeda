@@ -1,3 +1,5 @@
-ApiStuff.json
+src/ApiStuff.json
 .kiwiignore
 scripts/SendGJ.lua
+/.VSCodeCounter
+/export

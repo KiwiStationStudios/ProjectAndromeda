@@ -1,5 +1,11 @@
-[![sexylogo:)](logo.png)](https://gamejolt.com/games/zerodownnx/904594)
+[![sexylogo:)](logo.png)](https://gamejolt.com/games/andromedaproject/904594)
+---
 # Neonix!
+---
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/KiwiStationStudios/ProjectAndromeda?style=for-the-badge&labelColor=rgb(45%2C%2045%2C%2045)&color=rgb(85%2C%2085%2C%2085))
+![GitHub forks](https://img.shields.io/github/forks/KiwiStationStudios/ProjectAndromeda?style=for-the-badge&labelColor=rgb(45%2C%2045%2C%2045)&color=rgb(85%2C%2085%2C%2085))
+![GitHub stars](https://img.shields.io/github/stars/KiwiStationStudios/ProjectAndromeda?style=for-the-badge&labelColor=rgb(45%2C%2045%2C%2045)&color=rgb(85%2C%2085%2C%2085))
+---
 
 > Control Your character jumping above spikes and holes, with 13 Soundtracks, in this rhythm based platform.
 
@@ -30,7 +36,8 @@ To tun the game on your machine, first, install LÖVE and download the project, 
 - [LoveFrames - LinuxMan](https://github.com/linux-man/LoveFrames)
 - [Flux - rxi](https://github.com/rxi/flux/)
 - [GamejoltLua - mbrovko](https://github.com/mbrovko/gamejoltlua)
-- [luafft - h4rm](https://github.com/h4rm/luafft)
+- Neuron - KiwiSky (Save library private for now)
+- [luafft - h4rm (Modified for this project)](https://github.com/h4rm/luafft)
 - [Slab - flamendless](https://github.com/flamendless/Slab)
 - [Suit - vlrd](https://github.com/vrld/suit)
 - [Thirst - rhysuki](https://github.com/rhysuki/thirst)

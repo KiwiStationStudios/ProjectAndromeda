@@ -1,21 +1,49 @@
 {
-    "splash_menu" : {
-        "splash_menu_warning" : "/!\\ [WARNING] /!\\",
-        "splash_menu_warning_text" : "PHOTOSENSITIVE WARNING.\n\nThis game contains flashing lights and patterns \n\nthat may trigger seizures in individuals\nwith photosensitive epilepsy.\nPlayer discretion is advised.\n"
-    },
-    "main_menu" : {
-        "main_menu_options" : {
-            "main_menu_options_story_mode" : "Story Mode",
-            "main_menu_options_freeplay_mode" : "Freeplay Mode",
-            "main_menu_options_editor_mode" : "Editor Mode",
-            "main_menu_options_community_mode" : "Community maps",
-            "main_menu_options_customization_mode" : "Player Customization",
-            "main_menu_options_settings_mode" : "Settings",
-            "main_menu_options_shutdown" : "Shutdown"
+    "menu" : {
+        "selection" : {
+            "menu_selection_title" : "Select mode",
+            "menu_selection_normal_title" : "Normal mode",
+            "menu_selection_editor_title" : "Editor mode",
+            "menu_selection_char_editor_title" : "Customization mode"
+        },
+        "editor_hub" : {
+            "menu_selection_editor_hub_create" : "Create",
+            "menu_selection_editor_hub_browse" : "Browse levels",
+            "menu_selection_editor_hub_saved" : "Saved levels",
+            "menu_selection_editor_hub_browse_list" : {
+                "menu_selection_editor_hub_browse_list_title" : "Online levels"
+            }
+        },
+        "gamejolt" : {
+            "menu_gamejolt_state_not_connected" : "Not logged in",
+            "menu_gamejolt_state_connected" : "Welcome",
+            "menu_gamejolt_login_panel" : {
+                "menu_gamejolt_login_panel_title" : "Account management",
+                "menu_gamejolt_login_panel_desc" : "Log with your gamejolt account to unlock new features",
+                "menu_gamejolt_login_panel_login_text_username" : "Username",
+                "menu_gamejolt_login_panel_login_text_token" : "Token",
+                "menu_gamejolt_login_panel_login_button" : "Connect",
+                "menu_gamejolt_login_panel_cancel_button" : "Cancel",
+                "menu_gamejolt_login_panel_state" : {
+                    "menu_gamejolt_login_panel_state_fail_title" : "Failed to connect",
+                    "menu_gamejolt_login_panel_state_sucess_title" : "Connected with sucess",
+                    "menu_gamejolt_login_panel_state_fail" : "Failed to connect with gamejolt API, try again later",
+                    "menu_gamejolt_login_panel_state_sucess" : "Sucess, you're now logged in"
+                },
+                "menu_gamejolt_login_panel_account_settings" : {
+                    "menu_gamejolt_login_panel_account_settings_create_backup" : "Create backup",
+                    "menu_gamejolt_login_panel_account_settings_load_backup" : "Load backup",
+                    "menu_gamejolt_login_panel_account_settings_sign_off" : "Disconnect"
+                }
+            }
+        },
+        "action_screen" : {
+            "menu_action_screen_backup_process_running" : "The backup is running, please wait",
+            "menu_action_screen_backup_process_sucess" : "The backup was complete with sucess",
+            "menu_action_screen_backup_process_fail" : "Failed to create backup, please try again later",
+            "menu_action_screen_backup_load_process_running" : "Getting the backup, please wait",
+            "menu_action_screen_backup_load_process_sucess" : "The backup was got with sucess",
+            "menu_action_screen_backup_load_process_fail" : "Failed to download backup, please try again later"
         }
-    },
-    "level_select" : {
-        "level_select_rate" : "rate :",
-        "level_select_locked" : "locked"
     }
 }

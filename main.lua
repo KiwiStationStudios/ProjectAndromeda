@@ -24,15 +24,15 @@ function love.initialize(args)
 
     fontcache.init()
 
-    lollipop.currentSave.game = {
+    gameslot = neuron.new("andromeda")
+
+    gameslot.save.game = {
         user = {
             settings = {
                 video = {
                     shaders = true,
                     particleEffects = true,
                     fullscreen = false,
-                    colors = true,
-                    backgrounds = true,
                 },
                 audio = {
                     master = 75,
@@ -57,18 +57,45 @@ function love.initialize(args)
                         GameColors[1]
                     }
                 }
-            }
+            },
+            stats = {
+                editor = {},
+                saved = {},
+            },
+            achievments = {},
         }
     }
 
-    lollipop.initializeSlot("game")
+    gameslot:initialize()
 
-    if not lollipop.currentSave.game.user.gameid then
-        lollipop.currentSave.game.user.gameid = love.data.encode("string", "hex", love.data.hash("md5", love.system.getOS() .. os.time()))
+    --% Content management %--
+    --[[
+    if love.filesystem.isFused() then
+        local sucess1 = love.filesystem.mount(love.filesystem.getSourceBaseDirectory(), "source") 
+        local sucess2 = love.filesystem.mount(love.filesystem.newFileData(love.filesystem.read("source/game.assetdata"), "gameassets.zip"), "resources")
+    
+        if not sucess1 then
+            love.window.showMessageBox("Kiwi2D Error", "An Error occurred and the engine could not be initialized", "error")
+            love.event.quit()
+        end
+    
+        if not sucess2 then
+            love.window.showMessageBox("Kiwi2D Error", "An Error occurred during load folder 'resources'. The file does not exist.", "error")
+            love.event.quit()
+        end
+    end
+    ]]--%
+
+    if love.filesystem.isFused() then
+        local sucess = love.filesystem.mount(love.filesystem.getSourceBaseDirectory() .. "/Resources", "assets")
+        if not sucess then
+        love.window.showMessageBox("Kiwi2D Error", "An Error occurred during load folder 'resources'", "error")
+            love.event.quit()
+        end
     end
 
-    love.audio.setVolume(0.01 * lollipop.currentSave.game.user.settings.audio.master)
-    languageService = LanguageController(lollipop.currentSave.game.user.settings.misc.language)
+    love.audio.setVolume(0.01 * gameslot.save.game.user.settings.audio.master)
+    languageService = LanguageController(gameslot.save.game.user.settings.misc.language)
 
     registers = {
         user = {
@@ -82,9 +109,9 @@ function love.initialize(args)
         system = {
             settings = {
                 audio = {
-                    master = lollipop.currentSave.game.user.settings.audio.master,
-                    music = lollipop.currentSave.game.user.settings.audio.music,
-                    sfx = lollipop.currentSave.game.user.settings.audio.sfx,
+                    master = gameslot.save.game.user.settings.audio.master,
+                    music = gameslot.save.game.user.settings.audio.music,
+                    sfx = gameslot.save.game.user.settings.audio.sfx,
                 }
             },
             editor = {
@@ -106,7 +133,7 @@ function love.initialize(args)
     Presence = require 'src.Components.Modules.API.Presence'
     connectGJ()
     
-    if lollipop.currentSave.game.user.settings.misc.discordrpc then
+    if gameslot.save.game.user.settings.misc.discordrpc then
         connectDiscordRPC()
     end
 
@@ -133,13 +160,14 @@ function love.initialize(args)
         require("src.SubStates." .. substates[s]:gsub(".lua", ""))
     end
 
-    love.filesystem.createDirectory("editor")
-    love.filesystem.createDirectory("editor/levels")
-    love.filesystem.createDirectory("editor/edited")
+    love.filesystem.createDirectory("user")
+    love.filesystem.createDirectory("user/editor")
+    love.filesystem.createDirectory("user/saved")
+    love.filesystem.createDirectory("user/music")
 
     gamestate.registerEvents()
 
-    if lollipop.currentSave.game.user.settings.misc.checkForUpdates then
+    if gameslot.save.game.user.settings.misc.checkForUpdates then
         if versionChecker.check() then
             gamestate.switch(OutdatedState)
         else
@@ -155,6 +183,7 @@ function love.update(elapsed)
         if math.floor(registers.system.gameTime) >= 20 then
             gamejolt.pingSession(true)
             registers.system.gameTime = 0
+            io.printf(string.format("{bgGreen}{brightWhite}{bold}[Gamejolt]{reset}{brightWhite} : Client heartbeated a session (%s, %s){reset}\n", gamejolt.username, gamejolt.userToken))
         end
     end
 end

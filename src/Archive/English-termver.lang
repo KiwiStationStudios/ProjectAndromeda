@@ -1,0 +1,21 @@
+{
+    "splash_menu" : {
+        "splash_menu_warning" : "/!\\ [WARNING] /!\\",
+        "splash_menu_warning_text" : "PHOTOSENSITIVE WARNING.\n\nThis game contains flashing lights and patterns \n\nthat may trigger seizures in individuals\nwith photosensitive epilepsy.\nPlayer discretion is advised.\n"
+    },
+    "main_menu" : {
+        "main_menu_options" : {
+            "main_menu_options_story_mode" : "Story Mode",
+            "main_menu_options_freeplay_mode" : "Freeplay Mode",
+            "main_menu_options_editor_mode" : "Editor Mode",
+            "main_menu_options_community_mode" : "Community maps",
+            "main_menu_options_customization_mode" : "Player Customization",
+            "main_menu_options_settings_mode" : "Settings",
+            "main_menu_options_shutdown" : "Shutdown"
+        }
+    },
+    "level_select" : {
+        "level_select_rate" : "rate :",
+        "level_select_locked" : "locked"
+    }
+}

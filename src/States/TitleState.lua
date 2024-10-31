@@ -1,6 +1,6 @@
 TitleState = {}
 
-function TitleState:enter()
+function TitleState:init()
     Conductor = require 'src.Components.Modules.Game.Conductor'
     SpectrumVisualizer = require 'src.Components.Modules.Game.Graphics.SpecVisualizer'
     Expander = require 'src.Components.Modules.Game.Graphics.Expander'
@@ -17,14 +17,14 @@ function TitleState:enter()
 
     gridGradient = love.graphics.newGradient("vertical", {255, 255, 255, 255}, {0, 0, 0, 0})
 
-    Conductor.bpm = 123 / 2
+    Conductor.bpm = 91 / 2
 
     if not crymsonEdgeMenuTheme then
-        crymsonEdgeMenuTheme = love.audio.newSource("assets/sounds/Tracks/crymson_edge.ogg", "static")
+        crymsonEdgeMenuTheme = love.audio.newSource("assets/sounds/Tracks/future_base.ogg", "static")
     end
     crymsonEdgeMenuTheme:setVolume(registers.system.settings.audio.music)
     
-    spvzmenu = SpectrumVisualizer("assets/sounds/Tracks/crymson_edge.ogg", 1024, 32)
+    spvzmenu = SpectrumVisualizer("assets/sounds/Tracks/future_base.ogg", 1024, 32)
     
     fogGlowFx = Fog(love.graphics.newImage("assets/images/menus/glow.png"))
 

@@ -6,14 +6,14 @@ return function(data)
     })
         -- this window may be splitted in other files since it maybe can hold more states than just login --
         if gamejolt.isLoggedIn then
-            slab.Text(languageService["menu_gamejolt_state_connected"] .. " " .. lollipop.currentSave.game.user.settings.misc.gamejolt.username)
+            slab.Text(languageService["menu_gamejolt_state_connected"] .. " " .. gameslot.save.game.user.settings.misc.gamejolt.username)
             slab.NewLine()
             slab.BeginLayout("mainMenuGamejoltAccountWindowLoginLayout", {AlignX = "center"})
                 if slab.Button(languageService["menu_gamejolt_login_panel_account_settings_create_backup"]) then
                     if gamejolt.isLoggedIn then
                         io.printf(string.format("{bgGreen}{brightWhite}{bold}[Gamejolt]{reset}{brightWhite} : Creating backup for client (%s, %s){reset}\n", gamejolt.username, gamejolt.userToken))
                         local clientID = "nxuser_client_" .. love.data.encode("string", "hex", love.data.hash("sha1", 1))
-                        local slotID = love.data.encode("string", "hex", love.data.hash("md5", "game")) -- hardcoded for now --
+                        local slotID = v
                         local sucess = gamejolt.setBigData(clientID, love.filesystem.read("slots/" .. slotID .. ".dat"), true)
                         if not sucess then
                             io.printf(string.format("{bgGreen}{brightWhite}{bold}[Gamejolt]{bgRed}{brightWhite}[ERROR]{reset} : Failed to upload data{reset}\n"))
@@ -25,6 +25,9 @@ return function(data)
                 end
                 if slab.Button(languageService["menu_gamejolt_login_panel_account_settings_sign_off"]) then
                     
+                end
+                if slab.Button(languageService["menu_gamejolt_login_panel_cancel_button"]) then
+                    data.uiActive = false
                 end
             slab.EndLayout()
         else
@@ -54,10 +57,10 @@ return function(data)
                                 data.dialogStatusOpen = false
                             end
                         end
-                        lollipop.currentSave.game.user.settings.misc.gamejolt.username = data.sysDetails.username
-                        lollipop.currentSave.game.user.settings.misc.gamejolt.usertoken = data.sysDetails.token
+                        gameslot.save.game.user.settings.misc.gamejolt.username = data.sysDetails.username
+                        gameslot.save.game.user.settings.misc.gamejolt.usertoken = data.sysDetails.token
 
-                        lollipop.saveCurrentSlot()
+                        gameslot:saveSlot()
                     else
                         if data.dialogStatusOpen then
                             local rst = slab.MessageBox(languageService["menu_gamejolt_login_panel_state_fail_title"], languageService["menu_gamejolt_login_panel_state_fail"])

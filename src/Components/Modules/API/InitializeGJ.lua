@@ -1,12 +1,12 @@
 return function()
-    local file = love.filesystem.getInfo("ApiStuff.json")
+    local file = love.filesystem.getInfo("src/ApiStuff.json")
     if file then
-        local data = json.decode(file ~= nil and love.filesystem.read("ApiStuff.json") or "{}")
+        local data = json.decode(file ~= nil and love.filesystem.read("src/ApiStuff.json") or "{}")
         gamejolt.init(data.gamejolt.gameID, data.gamejolt.gameKey)
-        if lollipop.currentSave.game.user.settings.misc.gamejolt.username ~= "" and lollipop.currentSave.game.user.settings.misc.gamejolt.usertoken ~= "" then
+        if gameslot.save.game.user.settings.misc.gamejolt.username ~= "" and gameslot.save.game.user.settings.misc.gamejolt.usertoken ~= "" then
             gamejolt.authUser(
-                lollipop.currentSave.game.user.settings.misc.gamejolt.username,
-                lollipop.currentSave.game.user.settings.misc.gamejolt.usertoken
+                gameslot.save.game.user.settings.misc.gamejolt.username,
+                gameslot.save.game.user.settings.misc.gamejolt.usertoken
             )
             gamejolt.openSession()
             registers.user.player.gamejoltConnected = true

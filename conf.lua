@@ -3,7 +3,7 @@ function love.conf(w)
     w.window.width          =       1280
     w.window.height         =       768
     w.window.icon           =       "icon.png"
-    w.window.title          =       "[Project Andromeda!]"
+    w.window.title          =       "[Project Neonix!]"
     w.window.x              =       nil
     w.window.y              =       nil
     w.window.borderless     =       false
@@ -17,7 +17,7 @@ function love.conf(w)
 
     --% Storage %--
     w.externalstorage       =       true
-    w.identity              =       "com.kiwiworksinc.andromeda"
+    w.identity              =       "com.kiwiworksinc.projectnx"
 
     --% Modules %--
     w.modules.audio         =       true

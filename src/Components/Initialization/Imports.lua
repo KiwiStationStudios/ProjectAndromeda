@@ -3,6 +3,7 @@ return function()
     utf8 = require 'utf8'
     g3d = require 'libraries.g3d'
     lollipop = require 'libraries.lollipop'
+    neuron = require 'libraries.neuron'
     loveframes = require 'libraries.loveframes'
     moonshine = require 'libraries.moonshine'
     slab = require 'libraries.slab'
