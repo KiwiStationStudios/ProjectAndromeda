@@ -33,22 +33,23 @@ function LevelEditorListState:enter()
     for _, m in ipairs(levelsListFiles) do
         table.insert(levelListPanels.files, {
             levelname = levelsListFiles[_]:gsub("%.[^.]+$", ""),
+            filename = levelsListFiles[_],
             panel = patchPanel(
                 "assets/images/framestyles/frameStyle_linesmooth", 20, 
                 128 * _ * 1.1, -- <---- between the numbers, his name is joe --
                 love.graphics.getWidth() - 76, 96
             ),
             buttons = {
-                edit = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_edit"], (100 * 1 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                play = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_play"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                delete = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_delete"], (100 * 3 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16)
+                import = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_import"], (100 * 1 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
+                delete = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_delete"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
+                view = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_view"], (100 * 3 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16)
             } 
         })
     end
 
     for _, m in ipairs(gameslot.save.game.user.stats.editor) do
         table.insert(levelListPanels.files, {
-            levelname = levelsListFiles[_]:gsub("%.[^.]+$", ""),
+            levelname = m.meta.title,
             panel = patchPanel(
                 "assets/images/framestyles/frameStyle_linesmooth", 20, 
                 128 * _ * 1.1, -- <---- between the numbers, his name is joe --
@@ -91,6 +92,9 @@ function LevelEditorListState:draw()
         if registers.system.editor.editorList.currentViewMode == "internal" then
             for _, e in ipairs(levelListPanels.internal) do
                 e.panel:draw()
+
+                love.graphics.printf(e.levelname, fnt_missionSelect, 40, (128 * _ * 1.1) + 54, love.graphics.getWidth() / 2, "left")
+
                 for _, button in pairs(e.buttons) do
                     button:draw()
                 end
@@ -98,6 +102,9 @@ function LevelEditorListState:draw()
         elseif registers.system.editor.editorList.currentViewMode == "external" then
             for _, e in ipairs(levelListPanels.files) do
                 e.panel:draw()
+
+                love.graphics.printf(e.levelname, fnt_missionSelect, 40, (128 * _ * 1.1) + 54, love.graphics.getWidth() / 2, "left")
+
                 for _, button in pairs(e.buttons) do
                     button:draw()
                 end
@@ -173,14 +180,14 @@ function LevelEditorListState:mousepressed(x, y, button)
         end
     elseif registers.system.editor.editorList.currentViewMode == "external" then
         for _, e in ipairs(levelListPanels.files) do
-            if e.buttons.edit:clicked() then
-                print("edit")
-            end
-            if e.buttons.play:clicked() then
+            if e.buttons.import:clicked() then
                 print("edit2")
             end
             if e.buttons.delete:clicked() then
                 print("edit3")
+            end
+            if e.buttons.view:clicked() then
+                love.system.openURL("file://"..love.filesystem.getSaveDirectory() .. "/user/editor/")
             end
         end
     end
