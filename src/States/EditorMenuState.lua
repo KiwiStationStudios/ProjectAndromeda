@@ -1,10 +1,10 @@
 EditorMenuState = {}
 
-function EditorMenuState:enter()
-
+function EditorMenuState:init()
     clickzone = require 'src.Components.Modules.Game.Menu.SelectionClick'
+    particleController = require 'src.Components.Modules.Game.Graphics.ParticleController'
 
-    editorHubParticles = require("src.Components.Modules.Game.Menu.EditorMenu.EditorMenuParticles")()
+    --editorHubParticles = require("src.Components.Modules.Game.Menu.EditorMenu.EditorMenuParticles")()
     
     userIconImage, userIconQuads = love.graphics.getHashedQuads("assets/images/menus/menuIcons")
     lockIcon = userIconQuads["lock"]
@@ -16,6 +16,10 @@ function EditorMenuState:enter()
     end
     crymsonEdgeMenuTheme:setVolume(registers.system.settings.audio.music)
 
+    particleFX = particleController("assets/data/particles/EditorListBGParticles.lua")
+end
+
+function EditorMenuState:enter()
     menuIcons = {
         editorBrowse = love.graphics.newImage("assets/images/menus/editorHubBrowse.png"),
         editorLevelList = love.graphics.newImage("assets/images/menus/editorHubEditor.png"),
@@ -39,6 +43,7 @@ function EditorMenuState:enter()
         },
         {
             icon = menuIcons.editorBrowse,
+            name = "browseLevels",
             title = languageService["menu_selection_editor_hub_browse"],
             selected = false,
             sizeMulti = 0,
@@ -52,6 +57,7 @@ function EditorMenuState:enter()
         },
         {
             icon = menuIcons.editorSavedList,
+            name = "saveLevel",
             title = languageService["menu_selection_editor_hub_saved"],
             selected = false,
             sizeMulti = 0,
@@ -83,10 +89,11 @@ end
 function EditorMenuState:draw()
     menuCam:attach()
         love.graphics.setBlendMode("add")
-            love.graphics.draw(editorHubParticles, love.graphics.getWidth(), 0)
+            --love.graphics.draw(editorHubParticles, love.graphics.getWidth(), 0)
+            particleFX:draw()
         love.graphics.setBlendMode("alpha")
 
-        love.graphics.printf(languageService["menu_selection_editor_hub_title"], f_menuSelection, 0, 96, love.graphics.getWidth(), "center")
+        --love.graphics.printf(languageService["menu_selection_editor_hub_title"], f_menuSelection, 0, 96, love.graphics.getWidth(), "center")
 
         for i = 1, #menuContent, 1 do
             local optionListBoxW = love.graphics.getWidth() - (256 / #menuContent)
@@ -127,7 +134,8 @@ function EditorMenuState:draw()
 end
 
 function EditorMenuState:update(elapsed)
-    editorHubParticles:update(elapsed)
+    --editorHubParticles:update(elapsed)
+    particleFX:update(elapsed)
 
     for i = 1, #menuContent, 1 do
         menuContent[i].sizeMulti = math.lerp(menuContent[i].sizeMulti, 0, 0.1)

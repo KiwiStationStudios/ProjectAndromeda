@@ -47,6 +47,10 @@ function love.initialize(args)
                         usertoken = ""
                     },
                     checkForUpdates = true,
+                },
+                storage = {
+                    saveSongFile = true,
+                    externalFiles = true,
                 }
             },
             customization = {
@@ -122,6 +126,9 @@ function love.initialize(args)
                     createForm = {
                         
                     }
+                },
+                editorList = {
+                    currentViewMode = "internal"
                 }
             },
             gameTime = 0
@@ -171,7 +178,7 @@ function love.initialize(args)
         if versionChecker.check() then
             gamestate.switch(OutdatedState)
         else
-            gamestate.switch(SplashState)
+            gamestate.switch(LevelEditorListState)
         end
     end
 end

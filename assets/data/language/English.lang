@@ -44,6 +44,16 @@
             "menu_action_screen_backup_load_process_running" : "Getting the backup, please wait",
             "menu_action_screen_backup_load_process_sucess" : "The backup was got with sucess",
             "menu_action_screen_backup_load_process_fail" : "Failed to download backup, please try again later"
+        },
+        "level_list" : {
+            "menu_level_list_title" : "Editor list",
+            "menu_level_list_mode_internal" : "Internal",
+            "menu_level_list_mode_external" : "External",
+            "level_list_item_buttons" : {
+                "level_list_item_buttons_edit" : "Edit",
+                "level_list_item_buttons_play" : "Play",
+                "level_list_item_buttons_delete" : "Delete"
+            }
         }
     }
 }
