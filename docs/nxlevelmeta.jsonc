@@ -1,0 +1,14 @@
+{
+    "title" : "Level title",
+    "description" : "Simple description",
+    "username" : "username",
+    "gameversion" : 0,
+    "requestedDifficulty" : 0, // int range 1, 5
+    "songID" : "000000",     // used to download the song from newgrounds
+    "textures" : {
+        "tag" : {
+            "filename" : "",
+            "data" : "[read the image data]->[gzip compress]->[encode to hex]"
+        }
+    }
+}

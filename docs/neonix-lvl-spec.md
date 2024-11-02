@@ -7,7 +7,12 @@ This is just for the meta post
     "username" : "username",
     "gameversion" : 0,
     "requestedDifficulty" : 0, // float range 0.5 -> 5.0
-    "songID" : "000000"     // used to download the song from newgrounds
+    "songID" : "000000",     // used to download the song from newgrounds
+    "textures" : {
+        "tag" : {
+            "data" : "[read the image data]->[encode to hex]->[gzip compress]->[encode to hex]",
+        }
+    }
 }
 ```
 
@@ -21,30 +26,35 @@ level content
         "gameversion" : 0,
         "requestedDifficulty" : 0, // int range 1 -> 5
         "songID" : "000000",     // used to download the song from newgrounds,
-        "textures" : [
-            {
-                "tag" : "tag",
-                "data" : "[read the image data]->[encode to hex]->[gzip compress]->[encode to hex]",
-            }
-        ]
     },
     "level" : {
         "startPos" : [0, 0],
         "endPos" : [256, 0],
-        "bgID" : 1,
         "colorChannels" : {
             "reserved" : {
                 "bg" : [128, 128, 128],
-                "objs" : [255, 255, 255]
+                "objs" : [255, 255, 255],
+                "layer1" : [128, 128, 128],
+                "layer2" : [96, 96, 96]
             }
         },
         "startGamemode" : "cube",
-        "startSpeed" : 2,    // range from 1 to 4
+        "startSpeed" : 1,    // range from 0 to 4
         "startDirection" : "right",
-        "startFlipped" : false
+        "gravityFlipped" : false
     },
-    "objects" : [],
-    "objectThird" : []
+    "objects" : [
+        {
+            "id" : 1,
+            "position" : [0, 0, 0],
+            "layer": 0,
+            "rotation" : 0,
+            "size" : [1, 1],
+            "tagid" : null,
+            "colorChannel" : "reserved:layer1",
+            "collision" : true
+        }
+    ]
 }
 ```
 

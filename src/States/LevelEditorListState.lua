@@ -9,6 +9,7 @@ function LevelEditorListState:init()
 
     menuIcons_sheet, menuIcons_quads = love.graphics.getHashedQuads("assets/images/menus/menuIcons")
     fnt_missionSelect = fontcache.getFont("comfortaa_semibold", 26)
+    fnt_warnList = fontcache.getFont("comfortaa_bold", 36)
 
     listCam = camera()
     listCamScroll = love.graphics.getHeight() / 2
@@ -23,15 +24,12 @@ function LevelEditorListState:enter()
     Presence.update()
 
     levelListPanels = {
-        files = {},
-        internal = {},
     }
-    lume.clear(levelListPanels.files)
-    lume.clear(levelListPanels.internal)
+    lume.clear(levelListPanels)
     local levelsListFiles = love.filesystem.getDirectoryItems("user/editor")
 
     for _, m in ipairs(levelsListFiles) do
-        table.insert(levelListPanels.files, {
+        table.insert(levelListPanels, {
             levelname = levelsListFiles[_]:gsub("%.[^.]+$", ""),
             filename = levelsListFiles[_],
             panel = patchPanel(
@@ -40,24 +38,8 @@ function LevelEditorListState:enter()
                 love.graphics.getWidth() - 76, 96
             ),
             buttons = {
-                import = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_import"], (100 * 1 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                delete = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_delete"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                view = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_view"], (100 * 3 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16)
-            } 
-        })
-    end
-
-    for _, m in ipairs(gameslot.save.game.user.stats.editor) do
-        table.insert(levelListPanels.files, {
-            levelname = m.meta.title,
-            panel = patchPanel(
-                "assets/images/framestyles/frameStyle_linesmooth", 20, 
-                128 * _ * 1.1, -- <---- between the numbers, his name is joe --
-                love.graphics.getWidth() - 76, 96
-            ),
-            buttons = {
                 edit = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_edit"], (100 * 1 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                play = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_play"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
+                upload = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_upload"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
                 delete = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_delete"], (100 * 3 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16)
             } 
         })
@@ -69,8 +51,8 @@ function LevelEditorListState:enter()
     canClickOnButtonsPanel = false
     isHoldingClick = false
 
-    listLevelMode_internal = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["menu_level_list_mode_internal"], love.graphics.getWidth() - 172, 32, 128, 48, "comfortaa_regular", 20)
-    listLevelMode_files = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["menu_level_list_mode_external"],  love.graphics.getWidth() - 372, 32, 128, 48, "comfortaa_regular", 20)
+    listLevelCreate = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["menu_level_list_create"], 0, 32, 128, 48, "comfortaa_regular", 20)
+    listLevelCreate.x = (love.graphics.getWidth() - listLevelCreate.w) - 42
     backButton = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", "<<<", 10, 32, 128, 48, "comfortaa_regular", 20)
 end
 
@@ -81,7 +63,7 @@ function LevelEditorListState:draw()
     love.graphics.printf(languageService["menu_level_list_title"], fnt_missionSelect, 0, 48, love.graphics.getWidth(), "center")
 
     love.graphics.stencil(function()
-        love.graphics.rectangle("fill", 10, 118, love.graphics.getWidth() - 20, love.graphics.getHeight() - 150, 5)
+        love.graphics.rectangle("fill", 10, 118, love.graphics.getWidth() - 20, love.graphics.getHeight() - 150, 5) 
     end, "replace", 1)
 
     love.graphics.setLineWidth(3)
@@ -89,8 +71,8 @@ function LevelEditorListState:draw()
     love.graphics.setLineWidth(1)
     love.graphics.setStencilTest("greater", 0)
     listCam:attach()
-        if registers.system.editor.editorList.currentViewMode == "internal" then
-            for _, e in ipairs(levelListPanels.internal) do
+        if #levelListPanels > 0 then
+            for _, e in ipairs(levelListPanels) do
                 e.panel:draw()
 
                 love.graphics.printf(e.levelname, fnt_missionSelect, 40, (128 * _ * 1.1) + 54, love.graphics.getWidth() / 2, "left")
@@ -99,22 +81,13 @@ function LevelEditorListState:draw()
                     button:draw()
                 end
             end
-        elseif registers.system.editor.editorList.currentViewMode == "external" then
-            for _, e in ipairs(levelListPanels.files) do
-                e.panel:draw()
-
-                love.graphics.printf(e.levelname, fnt_missionSelect, 40, (128 * _ * 1.1) + 54, love.graphics.getWidth() / 2, "left")
-
-                for _, button in pairs(e.buttons) do
-                    button:draw()
-                end
-            end
+        else
+            love.graphics.printf(e.levelname, fnt_warnList, 20, 350, love.graphics.getWidth() - 20, "center")
         end
     listCam:detach()
     love.graphics.setStencilTest()
 
-    listLevelMode_internal:draw()
-    listLevelMode_files:draw()
+    listLevelCreate:draw()
     backButton:draw()
 end
 
@@ -122,18 +95,11 @@ function LevelEditorListState:update(elapsed)
     listCamY = listCamY - (listCamY - listCamScroll) * 0.05
     listCam.y = listCamY
 
-    listLevelMode_internal.mx, listLevelMode_internal.my = love.mouse.getPosition()
-    listLevelMode_files.mx, listLevelMode_files.my = love.mouse.getPosition()
+    listLevelCreate.mx, listLevelCreate.my = love.mouse.getPosition()
     backButton.mx, backButton.my = love.mouse.getPosition()
 
-    if registers.system.editor.editorList.currentViewMode == "internal" then
-        for _, e in ipairs(levelListPanels.internal) do
-            for _, button in pairs(e.buttons) do
-                button.mx, button.my = listCam:mousePosition()
-            end
-        end
-    elseif registers.system.editor.editorList.currentViewMode == "external" then
-        for _, e in ipairs(levelListPanels.files) do
+    if #levelListPanels > 0 then
+        for _, e in ipairs(levelListPanels) do
             for _, button in pairs(e.buttons) do
                 button.mx, button.my = listCam:mousePosition()
             end
@@ -143,51 +109,29 @@ function LevelEditorListState:update(elapsed)
     if listCamScroll <= love.graphics.getHeight() / 2 then
         listCamScroll = love.graphics.getHeight() / 2
     end
-    if registers.system.editor.editorList.currentViewMode == "internal" then
-        if #levelListPanels.internal > 0 then
-            if listCamScroll >= levelListPanels.internal[#levelListPanels.internal].panel.y - 214 then
-                listCamScroll = levelListPanels.internal[#levelListPanels.internal].panel.y - 214
-            end
-        end
-    elseif registers.system.editor.editorList.currentViewMode == "external" then
-        if #levelListPanels.files > 0 then
-            if listCamScroll >= levelListPanels.files[#levelListPanels.files].panel.y - 214 then
-                listCamScroll = levelListPanels.files[#levelListPanels.files].panel.y - 214
-            end
+
+    if #levelListPanels > 0 then
+        if listCamScroll >= levelListPanels[#levelListPanels].panel.y - 214 then
+            listCamScroll = levelListPanels[#levelListPanels].panel.y - 214
         end
     end
 end
 
 function LevelEditorListState:mousepressed(x, y, button)
-    if listLevelMode_files:clicked() then
-        registers.system.editor.editorList.currentViewMode = "external"
-    end
-    if listLevelMode_internal:clicked() then
-        registers.system.editor.editorList.currentViewMode = "internal"
+    if listLevelCreate:clicked() then
+        print("cre")
     end
 
-    if registers.system.editor.editorList.currentViewMode == "internal" then
-        for _, e in ipairs(levelListPanels.internal) do
+    if #levelListPanels > 0 then
+        for _, e in ipairs(levelListPanels) do
             if e.buttons.edit:clicked() then
                 print("edit")
             end
-            if e.buttons.play:clicked() then
+            if e.buttons.upload:clicked() then
                 print("edit2")
             end
             if e.buttons.delete:clicked() then
                 print("edit3")
-            end
-        end
-    elseif registers.system.editor.editorList.currentViewMode == "external" then
-        for _, e in ipairs(levelListPanels.files) do
-            if e.buttons.import:clicked() then
-                print("edit2")
-            end
-            if e.buttons.delete:clicked() then
-                print("edit3")
-            end
-            if e.buttons.view:clicked() then
-                love.system.openURL("file://"..love.filesystem.getSaveDirectory() .. "/user/editor/")
             end
         end
     end

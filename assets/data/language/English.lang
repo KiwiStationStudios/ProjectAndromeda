@@ -47,14 +47,12 @@
         },
         "level_list" : {
             "menu_level_list_title" : "Editor list",
-            "menu_level_list_mode_internal" : "Internal",
-            "menu_level_list_mode_external" : "External",
+            "menu_level_list_create" : "Create",
+            "menu_level_list_warn_list_empty" : "No level are created yet",
             "level_list_item_buttons" : {
                 "level_list_item_buttons_edit" : "Edit",
-                "level_list_item_buttons_play" : "Play",
                 "level_list_item_buttons_delete" : "Delete",
-                "level_list_item_buttons_import" : "Import",
-                "level_list_item_buttons_view" : "View"
+                "level_list_item_buttons_upload" : "Upload"
             }
         }
     }
