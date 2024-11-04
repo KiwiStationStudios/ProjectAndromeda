@@ -11,9 +11,13 @@ function MenuState:enter()
     MenuBGP = MenuBGParticles()
 
     if not crymsonEdgeMenuTheme then
-        crymsonEdgeMenuTheme = love.audio.newSource("assets/sounds/Tracks/crymson_edge.ogg", "static")
+        crymsonEdgeMenuTheme = love.audio.newSource("assets/sounds/Tracks/future_base.ogg", "static")
     end
     crymsonEdgeMenuTheme:setVolume(registers.system.settings.audio.music)
+    crymsonEdgeMenuTheme:setLooping(true)
+    if not crymsonEdgeMenuTheme:isPlaying() then
+        crymsonEdgeMenuTheme:play()
+    end
 
     userIconImage, userIconQuads = love.graphics.getHashedQuads("assets/images/menus/menuIcons")
 
@@ -50,6 +54,9 @@ function MenuState:enter()
         editor = love.graphics.newImage("assets/images/menus/selectionEditor.png"),
         customize = love.graphics.newImage("assets/images/menus/selectionPlayerEditor.png")
     }
+
+    mouseData = {x = 0, y = 0}
+    mouseData.x, mouseData.y = love.mouse.getPosition()
 
     menuContent = {
         {
@@ -134,41 +141,41 @@ function MenuState:draw()
         love.graphics.printf(languageService["menu_selection_title"], f_menuSelection, 0, 96, love.graphics.getWidth(), "center")
 
         --love.graphics.rectangle("fill", optionBoxX, love.graphics.getHeight() / 2 - 256 / 2, 256, 256, 15)
-        for i = 1, #menuContent, 1 do
+        for _, b in pairs(menuContent) do
             local optionListBoxW = love.graphics.getWidth() - (256 / #menuContent)
             local fraction = optionListBoxW / #menuContent
             local optionBoxW = fraction - 16
-            local optionBoxX = 256 + i * fraction - fraction / 2 - optionBoxW / 2
+            local optionBoxX = 256 + _ * fraction - fraction / 2 - optionBoxW / 2
             --love.graphics.rectangle("fill", optionBoxX, love.graphics.getHeight() / 2 - 256 / 2, 256, 256, 15)
-            if not menuContent[i].btn then
-                menuContent[i].btn = clickzone(optionBoxX - 128, (love.graphics.getHeight() / 2) - 128, 256, 256)
+            if not b.btn then
+                b.btn = clickzone(optionBoxX - 128, (love.graphics.getHeight() / 2) - 128, 256, 256)
             end
-            menuContent[i].selected = false
-            if menuContent[i].btn:hovered() then
-                menuContent[i].sizeMulti = 0.04
-                menuContent[i].textAlpha = 1
-                menuContent[i].selected = true
+            b.selected = false
+            if b.btn:hovered() then
+                b.sizeMulti = 0.04
+                b.textAlpha = 1
+                b.selected = true
             end
-            love.graphics.setColor(menuContent[i].lock.color)
+            love.graphics.setColor(b.lock.color)
             love.graphics.draw(
-                menuContent[i].icon, optionBoxX, love.graphics.getHeight() / 2, 0, 
-                (256 / menuContent[i].icon:getWidth()) + menuContent[i].sizeMulti, (256 / menuContent[i].icon:getHeight())  + menuContent[i].sizeMulti, 
-                menuContent[i].icon:getWidth() / 2, menuContent[i].icon:getHeight() / 2
+                b.icon, optionBoxX, love.graphics.getHeight() / 2, 0, 
+                (256 / b.icon:getWidth()) + b.sizeMulti, (256 / b.icon:getHeight())  + b.sizeMulti, 
+                b.icon:getWidth() / 2, b.icon:getHeight() / 2
             )
             love.graphics.setColor(1, 1, 1, 1)
 
-            if menuContent[i].lock.locked then
+            if b.lock.locked then
                 love.graphics.setBlendMode("add")
-                    love.graphics.setColor(1, 1, 1, menuContent[i].lock.alpha)
-                        --love.graphics.draw(menuContent[i].lock.icon, optionBoxX, love.graphics.getHeight() / 2, 0, 0.7, 0.7, lockIcon:getWidth() / 2, lockIcon:getHeight() / 2)
+                    love.graphics.setColor(1, 1, 1, b.lock.alpha)
+                        --love.graphics.draw(b.lock.icon, optionBoxX, love.graphics.getHeight() / 2, 0, 0.7, 0.7, lockIcon:getWidth() / 2, lockIcon:getHeight() / 2)
                         local qx, qy, qw, qh = lockIcon:getViewport()
                         love.graphics.draw(userIconImage, lockIcon, optionBoxX, love.graphics.getHeight() / 2, 0, 0.6, 0.6, qw / 2, qh / 2)
                     love.graphics.setColor(1, 1, 1, 1)
                 love.graphics.setBlendMode("alpha")
             end
 
-            love.graphics.setColor(1, 1, 1, menuContent[i].textAlpha)
-                love.graphics.printf(menuContent[i].title, f_optionDesc, optionBoxX - 128, (love.graphics.getHeight() / 2) + 148, 256, "center")
+            love.graphics.setColor(1, 1, 1, b.textAlpha)
+                love.graphics.printf(b.title, f_optionDesc, optionBoxX - 128, (love.graphics.getHeight() / 2) + 148, 256, "center")
             love.graphics.setColor(1, 1, 1, 1)
         end
 
@@ -200,25 +207,30 @@ function MenuState:update(elapsed)
         logonUI(userUI)
     end
 
+    mouseData.x, mouseData.y = love.mouse.getPosition()
+    --userUI.clickzone.mx, userUI.clickzone.my = menuCam:mousePosition()
+    userUI.clickzone.mx, userUI.clickzone.my = love.mouse.getPosition()
+
     if not userUI.uiActive then
-        for i = 1, #menuContent, 1 do
-            menuContent[i].sizeMulti = math.lerp(menuContent[i].sizeMulti, 0, 0.1)
-            menuContent[i].textAlpha = math.lerp(menuContent[i].textAlpha, 0, 0.1)
-            if menuContent[i].selected then
-                menuContent[i].lock.alpha = math.lerp(menuContent[i].lock.alpha, 1, 0.3)
+        for _, b in pairs(menuContent) do
+            b.sizeMulti = math.lerp(b.sizeMulti, 0, 0.1)
+            b.textAlpha = math.lerp(b.textAlpha, 0, 0.1)
+            --print(debug.formattable(b))
+            if b.selected then
+                b.lock.alpha = math.lerp(b.lock.alpha, 1, 0.3)
     
-                if menuContent[i].lock.locked then
-                    menuContent[i].lock.color[1] = math.lerp(menuContent[i].lock.color[1], 0.5, 0.1)
-                    menuContent[i].lock.color[2] = math.lerp(menuContent[i].lock.color[2], 0.5, 0.1)
-                    menuContent[i].lock.color[3] = math.lerp(menuContent[i].lock.color[3], 0.5, 0.1)
+                if b.lock.locked then
+                    b.lock.color[1] = math.lerp(b.lock.color[1], 0.5, 0.1)
+                    b.lock.color[2] = math.lerp(b.lock.color[2], 0.5, 0.1)
+                    b.lock.color[3] = math.lerp(b.lock.color[3], 0.5, 0.1)
                 end
             else
-                menuContent[i].lock.alpha = math.lerp(menuContent[i].lock.alpha, 0, 0.3)
+                b.lock.alpha = math.lerp(b.lock.alpha, 0, 0.3)
     
-                if menuContent[i].lock.locked then
-                    menuContent[i].lock.color[1] = math.lerp(menuContent[i].lock.color[1], 1, 0.1)
-                    menuContent[i].lock.color[2] = math.lerp(menuContent[i].lock.color[2], 1, 0.1)
-                    menuContent[i].lock.color[3] = math.lerp(menuContent[i].lock.color[3], 1, 0.1)
+                if b.lock.locked then
+                    b.lock.color[1] = math.lerp(b.lock.color[1], 1, 0.1)
+                    b.lock.color[2] = math.lerp(b.lock.color[2], 1, 0.1)
+                    b.lock.color[3] = math.lerp(b.lock.color[3], 1, 0.1)
                 end
             end
         end
@@ -253,12 +265,12 @@ end
 
 function MenuState:mousepressed(x, y, button)
     if not userUI.uiActive then
-        for i = 1, #menuContent, 1 do
-            if menuContent[i].btn:hovered() then
-                if button == 1 then
-                    if not menuContent[i].lock.locked then
+        for _, b in pairs(menuContent) do
+            if button == 1 then
+                if collision.pointRect(mouseData, b.btn) then
+                    if not b.lock.locked then
                         leaveCamAnimTransitionRunning = true
-                        optionSelected = i
+                        optionSelected = _
                     end
                 end
             end

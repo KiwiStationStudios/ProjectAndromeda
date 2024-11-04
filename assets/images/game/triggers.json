@@ -1,7 +1,6 @@
 {
-  "frames": [
-    {
-      "filename": "tile2.png",
+  "frames": {
+    "cameraTrigger.png": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -25,8 +24,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "checkpointTrigger.png",
+    "checkpointTrigger.png": {
       "frame": {
         "x": 32,
         "y": 0,
@@ -50,8 +48,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "hazards1.png",
+    "colorTrigger.png": {
       "frame": {
         "x": 0,
         "y": 32,
@@ -75,8 +72,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "orb.png",
+    "eventtrigger.png": {
       "frame": {
         "x": 32,
         "y": 32,
@@ -100,8 +96,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "saw2.png",
+    "fadePlayerHide.png": {
       "frame": {
         "x": 64,
         "y": 0,
@@ -125,8 +120,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "tile1.png",
+    "fadePlayerShow.png": {
       "frame": {
         "x": 64,
         "y": 32,
@@ -150,8 +144,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "tile10.png",
+    "fadeTrigger.png": {
       "frame": {
         "x": 0,
         "y": 64,
@@ -175,8 +168,7 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "tile11.png",
+    "moveTrigger.png": {
       "frame": {
         "x": 32,
         "y": 64,
@@ -200,186 +192,10 @@
         "y": 0.5
       }
     },
-    {
-      "filename": "eventtrigger.png",
+    "scaleTrigger.png": {
       "frame": {
         "x": 64,
         "y": 64,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile3.png",
-      "frame": {
-        "x": 96,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile4.png",
-      "frame": {
-        "x": 96,
-        "y": 32,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile5.png",
-      "frame": {
-        "x": 96,
-        "y": 64,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile6.png",
-      "frame": {
-        "x": 0,
-        "y": 96,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile7.png",
-      "frame": {
-        "x": 32,
-        "y": 96,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile8.png",
-      "frame": {
-        "x": 64,
-        "y": 96,
-        "w": 32,
-        "h": 32
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 32,
-        "h": 32
-      },
-      "sourceSize": {
-        "w": 32,
-        "h": 32
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "tile9.png",
-      "frame": {
-        "x": 96,
-        "y": 96,
         "w": 32,
         "h": 32
       },
@@ -400,15 +216,15 @@
         "y": 0.5
       }
     }
-  ],
+  },
   "meta": {
     "app": "http://free-tex-packer.com",
     "version": "0.6.7",
-    "image": "objects.png",
+    "image": "triggers.png",
     "format": "RGBA8888",
     "size": {
-      "w": 128,
-      "h": 128
+      "w": 96,
+      "h": 96
     },
     "scale": 1
   }

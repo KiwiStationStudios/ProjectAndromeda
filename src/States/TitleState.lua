@@ -23,6 +23,10 @@ function TitleState:init()
         crymsonEdgeMenuTheme = love.audio.newSource("assets/sounds/Tracks/future_base.ogg", "static")
     end
     crymsonEdgeMenuTheme:setVolume(registers.system.settings.audio.music)
+    crymsonEdgeMenuTheme:setLooping(true)
+    if not crymsonEdgeMenuTheme:isPlaying() then
+        crymsonEdgeMenuTheme:play()
+    end
     
     spvzmenu = SpectrumVisualizer("assets/sounds/Tracks/future_base.ogg", 1024, 32)
     

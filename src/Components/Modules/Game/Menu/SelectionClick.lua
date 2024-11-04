@@ -7,12 +7,13 @@ local function _new(_x, _y, _w, _h)
     self.y = _y
     self.w = _w
     self.h = _h
+    self.mx = 0
+    self.my = 0
     return self
 end
 
 function SelectionClick:hovered()
-    local mx, my = love.mouse.getPosition()
-    if mx >= self.x and mx <= self.x + self.w and my >= self.y and my <= self.y + self.h then
+    if self.mx >= self.x and self.mx <= self.x + self.w and self.my >= self.y and self.my <= self.y + self.h then
         return true
     end
     return false

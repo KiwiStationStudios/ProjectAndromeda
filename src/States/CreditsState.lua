@@ -10,9 +10,16 @@ function CreditsState:enter()
 
     nxLogo = love.graphics.newImage("assets/images/menus/logo_thingy.png")
     nxLogoFX = love.graphics.newImage("assets/images/menus/logo_fx.png")
-    
-    neonCodeCreditsSoundtrack = love.audio.newSource("assets/sounds/Tracks/neon_code.ogg", "static")
+
+    crymsonEdgeMenuTheme:stop()
+
+
+    if not neonCodeCreditsSoundtrack then
+        neonCodeCreditsSoundtrack = love.audio.newSource("assets/sounds/Tracks/neon_code.ogg", "static")
+    end
     neonCodeCreditsSoundtrack:setVolume(registers.system.settings.audio.music)
+    neonCodeCreditsSoundtrack:setLooping(true)
+    neonCodeCreditsSoundtrack:play()
 
     gradientFade = love.graphics.newGradient("vertical", {255, 255, 255, 255}, {0, 0, 0, 0})
 
@@ -22,7 +29,7 @@ function CreditsState:enter()
 
     yText = love.graphics.getHeight() - 20
     creditsText = love.filesystem.read("assets/data/Credits.txt")
-    f_credits = fontcache.getFont("quicksand_light", 25)
+    f_credits = fontcache.getFont("comfortaa_light", 25)
 
     textW, textLines = f_credits:getWrap(creditsText, love.graphics.getWidth())
     textH = f_credits:getHeight() * #textLines
@@ -44,13 +51,13 @@ function CreditsState:draw()
 
     spvz:draw(0, love.graphics.getHeight() - 128, 64, 0.3)
 
-    love.graphics.setHexColor("#000000ff")
+    love.graphics.setColor(0, 0, 0, 1)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), 130)
     love.graphics.draw(gradientFade, 0, 130, 0, love.graphics.getWidth(), 128)
     
     love.graphics.rectangle("fill", 0, love.graphics.getHeight() - 130, love.graphics.getWidth(), 130)
     love.graphics.draw(gradientFade, 0, love.graphics.getHeight() - 130, 0, love.graphics.getWidth(), -128)
-    love.graphics.setHexColor("#ffffffff")
+    love.graphics.setColor(1, 1, 1, 1)
 
     Expander.draw(love.graphics.getWidth() / 2, 84, 0)
 
@@ -84,6 +91,10 @@ function CreditsState:update(elapsed)
     end
 
     fogFx:update(elapsed)
+end
+
+function CreditsState:leave()
+    neonCodeCreditsSoundtrack:stop()
 end
 
 return CreditsState

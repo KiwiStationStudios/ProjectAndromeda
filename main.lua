@@ -124,7 +124,7 @@ function love.initialize(args)
                 levelList = {},
                 interface = {
                     createForm = {
-                        
+                        levelname = "",
                     }
                 },
                 editorList = {

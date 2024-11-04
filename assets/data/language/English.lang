@@ -53,6 +53,12 @@
                 "level_list_item_buttons_edit" : "Edit",
                 "level_list_item_buttons_delete" : "Delete",
                 "level_list_item_buttons_upload" : "Upload"
+            },
+            "menu_level_list_window" : {
+                "menu_level_list_window_title" : "Create new level",
+                "menu_level_list_window_text" : "Level name",
+                "menu_level_list_window_button_create" : "Create",
+                "menu_level_list_window_button_cancel" : "Cancel"
             }
         }
     }

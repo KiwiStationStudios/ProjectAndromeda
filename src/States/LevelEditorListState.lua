@@ -1,9 +1,34 @@
 LevelEditorListState = {}
 
+function LevelEditorListState.refreshLevelList()
+    lume.clear(levelListPanels)
+    local levelsListFiles = love.filesystem.getDirectoryItems("user/editor")
+
+    for _, m in ipairs(levelsListFiles) do
+        local typeF = love.filesystem.getInfo("user/editor/" .. m)
+        if typeF.type == "directory" then
+            table.insert(levelListPanels, {
+                levelname = levelsListFiles[_],
+                panel = patchPanel(
+                    "assets/images/framestyles/frameStyle_linesmooth", 20, 
+                    128 * _ * 1.1, -- <---- between the numbers, his name is joe --
+                    love.graphics.getWidth() - 76, 96
+                ),
+                buttons = {
+                    edit = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_edit"], (100 * 1 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
+                    upload = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_upload"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
+                    delete = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_delete"], (100 * 3 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16)
+                } 
+            })
+        end
+    end
+end
+
 function LevelEditorListState:init()
     buttonPatch = require 'src.Components.Modules.Game.Utils.PatchButton'
     patchPanel = require 'src.Components.Modules.Game.Utils.patchPanel'
     selectionClick = require 'src.Components.Modules.Game.Menu.SelectionClick'
+    createLevelForm = require 'src.Components.Modules.Interface.CreateLevelForm'
 
     levelsList = {}
 
@@ -23,33 +48,19 @@ function LevelEditorListState:enter()
     Presence.details = "Selecting Level"
     Presence.update()
 
-    levelListPanels = {
-    }
-    lume.clear(levelListPanels)
-    local levelsListFiles = love.filesystem.getDirectoryItems("user/editor")
-
-    for _, m in ipairs(levelsListFiles) do
-        table.insert(levelListPanels, {
-            levelname = levelsListFiles[_]:gsub("%.[^.]+$", ""),
-            filename = levelsListFiles[_],
-            panel = patchPanel(
-                "assets/images/framestyles/frameStyle_linesmooth", 20, 
-                128 * _ * 1.1, -- <---- between the numbers, his name is joe --
-                love.graphics.getWidth() - 76, 96
-            ),
-            buttons = {
-                edit = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_edit"], (100 * 1 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                upload = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_upload"], (100 * 2 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16),
-                delete = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["level_list_item_buttons_delete"], (100 * 3 * 1.5) + (love.graphics.getWidth() / 2), (128 * _ * 1.1) + 24, 96, 32, "comfortaa_regular", 16)
-            } 
-        })
+    if not crymsonEdgeMenuTheme then
+        crymsonEdgeMenuTheme = love.audio.newSource("assets/sounds/Tracks/future_base.ogg", "static")
+    end
+    crymsonEdgeMenuTheme:setVolume(registers.system.settings.audio.music)
+    crymsonEdgeMenuTheme:setLooping(true)
+    if not crymsonEdgeMenuTheme:isPlaying() then
+        crymsonEdgeMenuTheme:play()
     end
 
-    checkingPack = false
-    currentPack = nil
-    canClickOnButtonsList = true
-    canClickOnButtonsPanel = false
-    isHoldingClick = false
+    levelListPanels = {}
+
+    LevelEditorListState.refreshLevelList()
+    createLevelPanelOpen = false
 
     listLevelCreate = buttonPatch("assets/images/framestyles/frameStyle_linesmooth", languageService["menu_level_list_create"], 0, 32, 128, 48, "comfortaa_regular", 20)
     listLevelCreate.x = (love.graphics.getWidth() - listLevelCreate.w) - 42
@@ -82,16 +93,19 @@ function LevelEditorListState:draw()
                 end
             end
         else
-            love.graphics.printf(e.levelname, fnt_warnList, 20, 350, love.graphics.getWidth() - 20, "center")
+            love.graphics.printf(languageService["menu_level_list_warn_list_empty"], fnt_warnList, 20, 350, love.graphics.getWidth() - 20, "center")
         end
     listCam:detach()
     love.graphics.setStencilTest()
 
     listLevelCreate:draw()
     backButton:draw()
+
+    slab.Draw()
 end
 
 function LevelEditorListState:update(elapsed)
+    slab.Update(elapsed)
     listCamY = listCamY - (listCamY - listCamScroll) * 0.05
     listCam.y = listCamY
 
@@ -115,17 +129,28 @@ function LevelEditorListState:update(elapsed)
             listCamScroll = levelListPanels[#levelListPanels].panel.y - 214
         end
     end
+
+    if createLevelPanelOpen then
+        createLevelForm()
+    end
 end
 
 function LevelEditorListState:mousepressed(x, y, button)
     if listLevelCreate:clicked() then
-        print("cre")
+        createLevelPanelOpen = true
+        registers.system.editor.interface.createForm.levelname = ""
+    end
+
+    if backButton:clicked() then
+        gamestate.switch(EditorMenuState)
     end
 
     if #levelListPanels > 0 then
         for _, e in ipairs(levelListPanels) do
             if e.buttons.edit:clicked() then
-                print("edit")
+                crymsonEdgeMenuTheme:stop()
+                EditorState.levelfolder = e.levelname
+                gamestate.switch(EditorState)
             end
             if e.buttons.upload:clicked() then
                 print("edit2")
@@ -138,11 +163,13 @@ function LevelEditorListState:mousepressed(x, y, button)
 end
 
 function LevelEditorListState:wheelmoved(x, y)
-    if y < 0 then
-        listCamScroll = listCamScroll + 64
-    end
-    if y > 0 then
-        listCamScroll = listCamScroll - 64
+    if not createLevelPanelOpen then
+        if y < 0 then
+            listCamScroll = listCamScroll + 64
+        end
+        if y > 0 then
+            listCamScroll = listCamScroll - 64
+        end
     end
 end
 
